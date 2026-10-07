@@ -1,7 +1,5 @@
 Tech It & Go! - Project Planning Packet
 
-Author: Dr. Chantell McDowell, Per Scholas Student
-
 Borrow the tech. Build your next big idea.
 
 1. App name and short description
@@ -72,7 +70,7 @@ Reservation calendar and lending analytics
 
 4. ERD and data flow
 
-Equipment has many LessonPlans and many LendingRequests. Each lesson and request references one equipment item using a MongoDB ObjectId. Categories are an enum field on Equipment, not a separate collection. User has many LendingRequests. Each request includes an ownerId reference to User; borrower identity is derived from the authenticated account.
+All equipment has many LessonPlans and many LendingRequests. Each lesson and request references one equipment item using a MongoDB ObjectId. Categories are an enum field on Equipment, not a separate collection. User has many LendingRequests. Each request includes an ownerId reference to User; borrower identity is derived from the authenticated account.
 
 erDiagram
   USER   --o{ LENDING_REQUEST : owns
@@ -167,36 +165,18 @@ Equipment POST/PATCH/DELETE are staff-only in a public release. Request endpoint
 
 7. Project mastersheet and repository status
 
-Project Mastersheet: https://docs.google.com/spreadsheets/d/11-mfYpMbSFxWU-Vt-C3s9XQO0fqFHinEPh6-SurAm1k/edit?usp=sharing
-
-Project 1, row 24: Dr. Chantell McDowell; Tech It & Go!. Frontend/backend repository cells remain blank. No matching technology repository was found; proposed names are Dr_Chantell_Technology_Lending_Library_Frontend and Dr_Chantell_Technology_Lending_Library_Backend. These are proposed names, not existing repository links.
-
-Slack thread draft
-
-Hi Paul and Bryan! My proposed app is Tech It & Go!, a full-stack app for browsing technology kits, submitting borrowing requests, and finding related lesson plans for makerspaces and nonprofit technology programs.
-
-I have attached my planning packet with main-page wireframes, ERD, eight user stories, RESTful routes, and daily milestones.
-
-Planning board: [paste your shared Trello board URL here]
-Frontend repository: [paste created repository URL here]
-Backend repository: [paste created repository URL here]
-
-I entered my name and app name in the project mastersheet. My plan is to complete backend functionality Monday/Tuesday, frontend integration Wednesday, MVP and styling Thursday, and deployment/testing Friday. Advanced lending tracking and notifications are in the Icebox.
-
-Thank you!
-Dr. Chantell McDowell
-
 Submission checklist
 Attach the PDF wireframes/ERD and planning document in the joint Slack thread.
 Create and share a Trello board using the included list/card plan; replace the draft placeholder.
-Create two repositories, replace placeholders, and enter their real links in mastersheet columns E/F by Monday.
-Send the completed draft in the joint thread with Paul and Bryan. No Slack message has been sent.
+Create two repositories, replace placeholders, and enter their real links in mastersheet column by Monday.
+Send the completed draft in the joint thread with Paul and Bryan.
 
 8. Required MERN additions — October 5, 2026
 
 This section updates the earlier proposal to match the acceptance criteria supplied from class. These are implementation requirements, not claims that application code is complete. Authentication and personal request history move from Icebox into MVP.
 
 Class announcement summary
+
 Dr. Chantell McDowell appears on the supplied approved-project list.
 Backend Development was due October 2 at 11:59 p.m. Eastern.
 MERN Development is due October 9 at 9:00 a.m. Eastern.
@@ -236,11 +216,14 @@ Return a pagination object with page, limit, total, and totalPages. Validate pos
 Model and authorization details
 User: name, unique normalized email, passwordHash excluded from normal queries, role (borrower/staff), timestamps.
 LendingRequest: ownerId references User; equipmentId references Equipment; checkoutDate, returnDate, purpose, pending status, timestamps.
+
 Preserve equipment and lesson relationships. Equipment quantity is a nonnegative integer; onSiteOnly and archived are booleans.
 Query request mutations by both _id and ownerId. A guessed ID must not expose or modify another user's records.
 Allowlist editable fields; users cannot change ownerId, role, or approval status.
 Handle duplicate-key email errors as form-friendly conflicts. Keep JWT_SECRET and MongoDB credentials in backend environment variables; commit only .env.example.
+
 Reject expired/invalid JWTs; clear client token on authentication failure. React sends Authorization: Bearer TOKEN on protected requests.
+
 localStorage is used to meet the supplied rubric; never render untrusted HTML or place database credentials/secrets in frontend code.
 
 Board cards to add to To Do
