@@ -71,6 +71,27 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(404).json({ message: "Request was not found." });
+    }
+
+    const request = await LendingRequest.findOne({
+      _id: req.params.id,
+      ownerId: req.user.userId,
+    }).populate("equipmentId", "name category imageUrl onSiteOnly");
+
+    if (!request) {
+      return res.status(404).json({ message: "Request was not found." });
+    }
+
+    res.json({ request });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/", async (req, res, next) => {
   try {
     const { equipmentId, checkoutDate, returnDate } = req.body;
