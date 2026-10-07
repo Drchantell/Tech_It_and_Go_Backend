@@ -1,95 +1,293 @@
 # Tech It & Go! Backend
 
-Tech It & Go! is my Per Scholas capstone project. This repository contains the Express and MongoDB backend for my technology lending library.
+## About My Project
 
-The backend supports account registration and login, JWT-protected routes, equipment management, lesson plans, and personal lending requests.
+Tech It & Go! is my Per Scholas capstone project. I created it as a technology lending library for educators, makerspaces, nonprofits, and learners.
 
-## Main Features
+This repository contains the backend of my application. I built it with Node.js, Express, MongoDB Atlas, and Mongoose.
 
-- MongoDB Atlas connection with Mongoose
-- User registration with hashed passwords
-- JWT login and protected routes
-- Borrower and staff roles
-- Full Equipment CRUD for staff
-- Full Lending Request CRUD for borrowers
-- Equipment search and availability filters
-- Lesson plan read routes
-- Ownership checks so users only manage their own requests
-- Server-side pagination
-- Validation and safe error messages
-- Starter equipment and lesson seed data
-- Safe non-destructive staff account setup
-- Automated integration tests against MongoDB
+The backend handles the database, account registration and login, equipment information, lesson plans, and lending requests.
 
-## Run the Backend
+## What the Backend Does
 
-1. Open this folder in VS Code.
-2. Run `npm install`.
-3. Copy `.env.example` to a new file named `.env`.
-4. Add your private MongoDB Atlas connection string to `MONGO_URI`.
-5. Replace the JWT placeholder with a long random value.
-6. Run `npm run dev`.
-7. Open `http://localhost:5000/api/health` to check the server and database connection.
+My backend can:
 
-A successful connection returns that the server is running and the database is connected.
+- Connect to MongoDB
+- Register a new user
+- Hash passwords before saving them
+- Log in a user
+- Create JWT tokens
+- Protect private routes
+- Separate borrower and staff permissions
+- Store equipment
+- Store lesson plans
+- Store lending requests
+- Check request ownership
+- Validate form information
+- Return clear API responses
 
-## Add Starter Data
+## Full CRUD
 
-Run:
+My project includes full CRUD for Equipment and Lending Requests.
 
-`npm run seed`
+CRUD means Create, Read, Update, and Delete.
 
-This adds sample equipment and matching lesson plans.
+### Equipment CRUD
 
-## Create or Update a Staff Account
+Staff users can:
 
-Add `SEED_STAFF_NAME`, `SEED_STAFF_EMAIL`, and `SEED_STAFF_PASSWORD` to your private `.env`, then run:
+- Create - add new equipment
+- Read - view all equipment or one equipment item
+- Update - change equipment information
+- Delete - remove equipment
 
-`npm run create-staff`
+If equipment already has lending history, the application archives it instead of deleting the history.
 
-This does not wipe the database.
+Routes:
 
-## Full CRUD Routes
+```text
+POST   /api/equipment
+GET    /api/equipment
+GET    /api/equipment/:id
+PATCH  /api/equipment/:id
+DELETE /api/equipment/:id
+```
+
+### Lending Request CRUD
+
+Logged-in borrowers can:
+
+- Create - submit a new lending request
+- Read - view all of their requests or one request
+- Update - edit their own pending request
+- Delete - delete their own pending request
+
+Routes:
+
+```text
+POST   /api/requests
+GET    /api/requests
+GET    /api/requests/:id
+PATCH  /api/requests/:id
+DELETE /api/requests/:id
+```
+
+A borrower can only access their own requests.
+
+## Database Models
+
+I created four main Mongoose models.
+
+### User
+
+Stores information such as:
+
+- Name
+- Email
+- Password hash
+- Role
 
 ### Equipment
 
-- Create: `POST /api/equipment` - staff only
-- Read all: `GET /api/equipment`
-- Read one: `GET /api/equipment/:id`
-- Update: `PATCH /api/equipment/:id` - staff only
-- Delete/archive: `DELETE /api/equipment/:id` - staff only
+Stores information such as:
 
-### Lending Requests
+- Name
+- Category
+- Description
+- Quantity available
+- Skill level
+- Safety notes
+- On-site-only status
+- Archived status
 
-- Create: `POST /api/requests`
-- Read all owned requests: `GET /api/requests`
-- Read one owned request: `GET /api/requests/:id`
-- Update owned pending request: `PATCH /api/requests/:id`
-- Delete owned pending request: `DELETE /api/requests/:id`
+### Lesson Plan
 
-## Other API Routes
+Stores:
 
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/auth/me`
-- `GET /api/lessons`
-- `GET /api/lessons/:id`
+- Equipment reference
+- Title
+- Objectives
+- Materials
+- Steps
+- Skill level
 
-## Automated Test
+### Lending Request
 
-Run:
+Stores:
 
-`npm test`
+- Equipment reference
+- User reference
+- Borrower information
+- Checkout date
+- Return date
+- Purpose
+- Request status
 
-The integration test connects to MongoDB and verifies registration, login, staff authorization, borrower ownership rules, equipment CRUD, lending-request CRUD, and lesson reads.
+## Authentication and Security
+
+I use bcrypt to hash passwords.
+
+I use JSON Web Tokens for login authentication.
+
+Protected routes check the token before allowing access.
+
+The backend also checks roles so regular borrowers cannot use staff-only equipment routes.
+
+For lending requests, the backend checks the logged-in user's ID so one borrower cannot read, edit, or delete another borrower's request.
+
+Private information such as my MongoDB connection string and JWT secret stays in a local `.env` file and is not committed to GitHub.
+
+## Main Authentication Routes
+
+```text
+POST /api/auth/register
+POST /api/auth/login
+GET  /api/auth/me
+```
+
+## Lesson Plan Routes
+
+```text
+GET /api/lessons
+GET /api/lessons/:id
+```
+
+## How to Run the Backend
+
+1. Open the backend folder in VS Code.
+2. Open the terminal.
+3. Install the packages:
+
+```bash
+npm install
+```
+
+4. Copy `.env.example` and create a new file named `.env`.
+5. Add your private settings:
+
+```env
+PORT=5000
+MONGO_URI=YOUR_MONGODB_ATLAS_CONNECTION_STRING
+CLIENT_URL=http://localhost:5173
+JWT_SECRET=YOUR_PRIVATE_SECRET
+```
+
+6. Start the server:
+
+```bash
+npm run dev
+```
+
+7. Open this address in the browser:
+
+```text
+http://localhost:5000/api/health
+```
+
+A successful connection should show that the server is running and the database is connected.
+
+## Add Sample Data
+
+To add the starter equipment and lesson plans, run:
+
+```bash
+npm run seed
+```
+
+I only need to run the seed when I want to reset or prepare sample data.
+
+## Create a Staff Account
+
+I can create or update a staff account without clearing my database.
+
+I add these values to my private `.env` file:
+
+```env
+SEED_STAFF_NAME=Dr. Chantell McDowell
+SEED_STAFF_EMAIL=YOUR_EMAIL
+SEED_STAFF_PASSWORD=YOUR_PRIVATE_PASSWORD
+```
+
+Then I run:
+
+```bash
+npm run create-staff
+```
+
+## Testing
+
+I added an integration test for the backend.
+
+I can run it with:
+
+```bash
+npm test
+```
+
+The test checks:
+
+- Registration
+- Login
+- JWT authentication
+- Staff permissions
+- Borrower permissions
+- Equipment CRUD
+- Lending Request CRUD
+- Request ownership
+- Lesson plan reading
+- MongoDB database operations
+
+The backend also includes a GitHub Actions workflow that runs the syntax check and integration test.
+
+## Technologies I Used
+
+- Node.js
+- Express
+- MongoDB Atlas
+- Mongoose
+- bcrypt
+- JSON Web Tokens
+- dotenv
+- CORS
+- Supertest
+- Git
+- GitHub
 
 ## Deployment
 
-See `DEPLOYMENT.md` for the Render and MongoDB Atlas setup.
+The backend is prepared for Render deployment.
 
-## Technology
+I included:
 
-Node.js, Express, MongoDB Atlas, Mongoose, bcrypt, JSON Web Tokens, dotenv, CORS, Supertest, Git, and GitHub.
+- `render.yaml`
+- Environment variable support
+- A health-check route
+- MongoDB Atlas connection support
+- CORS settings for local and deployed frontend URLs
+
+Deployment instructions are in:
+
+`DEPLOYMENT.md`
+
+## What I Learned
+
+This backend helped me understand how a full-stack application works behind the user interface.
+
+I learned how to:
+
+- Create an Express server
+- Connect MongoDB with Mongoose
+- Build models and API routes
+- Use CRUD operations
+- Hash passwords
+- Create JWT authentication
+- Protect routes
+- Use user roles
+- Check data ownership
+- Validate information
+- Connect a React frontend to an Express backend
+- Test API routes
+- Prepare an application for deployment
 
 ## Author
 
