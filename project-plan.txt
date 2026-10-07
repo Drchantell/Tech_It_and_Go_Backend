@@ -3,7 +3,6 @@ Tech It & Go! - Project Plan
 Borrow the tech. Build your next big idea.
 
 1. Project Overview
-
 Tech It & Go! is a full-stack technology lending library. It helps makerspaces, nonprofits, educators, and learners browse technology equipment, view related lesson ideas, and submit borrowing requests.
 
 I chose this project because it connects my background in libraries and makerspaces with what I am learning in software engineering.
@@ -11,7 +10,6 @@ I chose this project because it connects my background in libraries and makerspa
 The collection can include 3D printing kits, robotics equipment, computers, coding tools, emerging technology, and entrepreneurship resources. Large equipment can be marked for on-site use only. Software listings can explain license information, but the app will not share or redistribute software licenses.
 
 2. Main Goal
-
 My goal is to build a working MERN application where users can:
 
 - Create an account
@@ -257,4 +255,4 @@ Show staff equipment management
 This project gives me a chance to practice frontend development, backend development, databases, authentication, CRUD operations, API routes, and full-stack application design in one project.
 
 Author: Dr. Chantell McDowell
-        Per Scholas Student
+        PerScholas Student
