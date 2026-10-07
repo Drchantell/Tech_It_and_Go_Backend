@@ -255,3 +255,6 @@ Log out
 Show staff equipment management
 
 This project gives me a chance to practice frontend development, backend development, databases, authentication, CRUD operations, API routes, and full-stack application design in one project.
+
+Author: Dr. Chantell McDowell
+        Per Scholas Student
