@@ -23,6 +23,7 @@ jobs:
 
     env:
       MONGO_URI: mongodb://127.0.0.1:27017/tech_it_go_test
+      MONGO_DB_NAME: tech_it_go_test
       JWT_SECRET: github-actions-test-secret
       CLIENT_URL: http://localhost:5173
 
@@ -44,3 +45,13 @@ jobs:
 
       - name: Run API integration tests
         run: npm test
+
+      - name: Package backend source
+        run: zip -r tech-it-go-backend-source.zip . -x "node_modules/*" ".git/*"
+
+      - name: Upload backend source
+        uses: actions/upload-artifact@v4
+        with:
+          name: tech-it-go-backend-source
+          path: tech-it-go-backend-source.zip
+          retention-days: 7
