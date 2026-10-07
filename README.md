@@ -1,17 +1,17 @@
 Tech It and Go Backend
 
-This repository holds the backend plan for my technology lending library capstone. I want the server to connect the React pages to MongoDB so equipment, lessons, users, and borrowing requests can be saved.
+I am building a technology lending library for my Per Scholas capstone. This first step includes an Express server and a MongoDB connection using Mongoose. Equipment, lessons, login, and borrowing requests will be added next.
 
-The backend application has not been added to this repository yet. The project-plan.txt file explains the planned features and routes. There is no server to run at this stage.
+To run it, download or clone this repository and open the folder in VS Code. In the terminal, run npm install. Copy .env.example into a new file named .env. Replace the MONGO_URI placeholder with your own MongoDB Atlas connection string. Keep .env private and do not upload it to GitHub.
 
-I plan to use Node.js, Express, MongoDB, and Mongoose. Node.js runs my JavaScript on the server. Express handles requests from the frontend. MongoDB stores the information, and Mongoose helps me organize it into models.
+Run npm run dev to start the server. It connects to MongoDB before it begins listening on port 5000. When the connection works, the terminal prints MongoDB connected successfully and Server is running on port 5000.
 
-I also plan to use bcrypt to hash passwords and JSON Web Tokens to check login. Users should only be able to view and change their own borrowing requests. Staff will have permission to manage equipment.
+Open http://localhost:5000/api/health to check the connection. A connected database returns status 200. If the database disconnects after startup, the route returns status 503. The home route at http://localhost:5000 shows a welcome message.
 
-The planned routes include registration and login, equipment browsing, lesson details, and creating, viewing, editing, and deleting personal requests. My full route plan is in project-plan.txt.
+The connection code is ready, but a live Atlas connection still needs my private database settings. I have not verified a live database connection yet. If startup fails, I need to check the connection string, database password, and Atlas network access.
 
-A planning challenge was deciding how users, equipment, lessons, and requests should connect. A borrowing request needs to point to both the person who owns it and the equipment being requested. I need to check permissions on the server rather than rely only on what buttons appear on the screen.
+One challenge is keeping database settings separate from the code so I can share the project without sharing my password. Another is making sure the server does not announce success before MongoDB connects.
 
-After I graduate, I would like to add staff approvals, return tracking, overdue reminders, and equipment condition reports. I would also like to use the project to support real nonprofit technology lending programs.
+After I graduate, I would like to add staff approvals, return tracking, reminders, and equipment condition reports.
 
 Author Dr. Chantell McDowell PerScholas Student
