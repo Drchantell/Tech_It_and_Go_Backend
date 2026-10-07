@@ -1,17 +1,68 @@
-Tech It and Go Backend
+# Tech It & Go! Backend
 
-I am building a technology lending library for my Per Scholas capstone. This first step includes an Express server and a MongoDB connection using Mongoose. Equipment, lessons, login, and borrowing requests will be added next.
+Tech It & Go! is my Per Scholas capstone project. This repository contains the Express and MongoDB backend for my technology lending library.
 
-To run it, download or clone this repository and open the folder in VS Code. In the terminal, run npm install. Copy .env.example into a new file named .env. Replace the MONGO_URI placeholder with your own MongoDB Atlas connection string. Keep .env private and do not upload it to GitHub.
+The backend supports account registration and login, JWT-protected routes, equipment management, lesson plans, and personal lending requests.
 
-Run npm run dev to start the server. It connects to MongoDB before it begins listening on port 5000. When the connection works, the terminal prints MongoDB connected successfully and Server is running on port 5000.
+## Main Features
 
-Open http://localhost:5000/api/health to check the connection. A connected database returns status 200. If the database disconnects after startup, the route returns status 503. The home route at http://localhost:5000 shows a welcome message.
+- MongoDB Atlas connection with Mongoose
+- User registration with hashed passwords
+- JWT login and protected routes
+- Borrower and staff roles
+- Equipment CRUD for staff
+- Equipment search and availability filters
+- Lesson plan routes
+- Personal lending request create, read, edit, and delete
+- Ownership checks so users only manage their own requests
+- Server-side pagination
+- Validation and safe error messages
+- Starter equipment and lesson seed data
 
-The connection code is ready, but a live Atlas connection still needs my private database settings. I have not verified a live database connection yet. If startup fails, I need to check the connection string, database password, and Atlas network access.
+## Run the Backend
 
-One challenge is keeping database settings separate from the code so I can share the project without sharing my password. Another is making sure the server does not announce success before MongoDB connects.
+1. Open this folder in VS Code.
+2. Run `npm install`.
+3. Copy `.env.example` to a new file named `.env`.
+4. Add your private MongoDB Atlas connection string to `MONGO_URI`.
+5. Replace the JWT placeholder with a long random value.
+6. Run `npm run dev`.
+7. Open `http://localhost:5000/api/health` to check the server and database connection.
 
-After I graduate, I would like to add staff approvals, return tracking, reminders, and equipment condition reports.
+A successful connection returns that the server is running and the database is connected.
 
-Author Dr. Chantell McDowell PerScholas Student
+## Add Starter Data
+
+Run:
+
+`npm run seed`
+
+This adds sample equipment and matching lesson plans.
+
+If you also want a staff demo account, add `SEED_STAFF_EMAIL` and a password of at least 8 characters to your private `.env` file before running the seed command.
+
+## Main API Routes
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/auth/me`
+- `GET /api/equipment`
+- `GET /api/equipment/:id`
+- `POST /api/equipment` - staff only
+- `PATCH /api/equipment/:id` - staff only
+- `DELETE /api/equipment/:id` - staff only
+- `GET /api/lessons`
+- `GET /api/lessons/:id`
+- `GET /api/requests`
+- `POST /api/requests`
+- `PATCH /api/requests/:id`
+- `DELETE /api/requests/:id`
+
+## Technology
+
+Node.js, Express, MongoDB Atlas, Mongoose, bcrypt, JSON Web Tokens, dotenv, CORS, Git, and GitHub.
+
+## Author
+
+Dr. Chantell McDowell  
+Per Scholas Student
