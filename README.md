@@ -269,6 +269,24 @@ Deployment instructions are in:
 
 `DEPLOYMENT.md`
 
+## Challenges I Faced
+
+One of the biggest challenges I faced was connecting MongoDB correctly and understanding how the backend communicates with the database. I had to learn the difference between my MongoDB Atlas login and the database user credentials used by the application. I also had to understand environment variables and why private information such as the MongoDB connection string should never be committed to GitHub.
+
+Authentication was another major challenge. I had to understand how bcrypt hashes passwords, how JWT tokens are created, and how protected routes check the token before allowing access.
+
+Adding borrower and staff permissions made the project more complex. I had to make sure a regular borrower could not create, edit, or delete equipment. I also had to make sure one borrower could not read, change, or delete another borrower's lending request.
+
+Building full CRUD correctly was another important challenge. I had to connect Create, Read, Update, and Delete operations to MongoDB for both equipment and lending requests while also validating the information being submitted.
+
+The lending request dates also required extra validation. I needed to prevent checkout dates in the past and make sure the return date came after the checkout date.
+
+Pagination was new for me too. Instead of sending every lending request at once, I had to understand how the backend could return smaller groups of results and include page information for the frontend.
+
+Deployment preparation was another learning experience. I had to understand CORS, why the backend must allow the deployed frontend URL, how Render connects to MongoDB Atlas, and how environment variables are added without exposing passwords or secrets.
+
+Testing the backend also helped me work through challenges. I added an integration test so I could check registration, login, permissions, ownership, MongoDB operations, and full CRUD together instead of testing every piece separately by hand.
+
 ## What I Learned
 
 This backend helped me understand how a full-stack application works behind the user interface.
