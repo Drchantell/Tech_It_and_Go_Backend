@@ -8,7 +8,8 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "seed": "node seed.js",
-    "test": "node --test tests/*.test.js"
+    "test": "node --test tests/*.test.js",
+    "create-staff": "node create-staff.js"
   },
   "author": "Dr. Chantell McDowell, PerScholas Student",
   "dependencies": {
