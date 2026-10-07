@@ -1,243 +1,257 @@
-Tech It & Go! - Project Planning Packet
+Tech It & Go! - Project Plan
 
 Borrow the tech. Build your next big idea.
 
-1. App name and short description
-Tech It & Go! - a full-stack app that helps makerspaces, nonprofits, and educators browse technology kits, submit borrowing requests, and find related lesson plans.
+1. Project Overview
 
-Project proposal
-I plan to build a technology lending library that connects my background in libraries and makerspaces with my software engineering studies. The collection will include 3D printing kits, robotics, computers, coding resources, emerging technology, and entrepreneurship tools. Software records describe license terms and authorized access; the app does not redistribute software licenses. Large fabrication equipment can be listed as on-site use only.
+Tech It & Go! is a full-stack technology lending library. It helps makerspaces, nonprofits, educators, and learners browse technology equipment, view related lesson ideas, and submit borrowing requests.
 
-My MVP includes a home page, catalog, search and filters, item details, related lessons, equipment CRUD, a lending request form, database persistence, responsive styling, and deployment. A request is pending, not a confirmed reservation. Availability is a staff-maintained current quantity; automatic date-based inventory and approvals belong in the Icebox.
+I chose this project because it connects my background in libraries and makerspaces with what I am learning in software engineering.
 
-Technologies: React with Vite, JavaScript, HTML, CSS, React Router, Node.js, Express, MongoDB Atlas, Mongoose, bcrypt, jsonwebtoken, dotenv, fetch, Git/GitHub, VS Code, and Postman. Colors: hot pink, teal/Tiffany blue, soft purple, mint, black, and white.
+The collection can include 3D printing kits, robotics equipment, computers, coding tools, emerging technology, and entrepreneurship resources. Large equipment can be marked for on-site use only. Software listings can explain license information, but the app will not share or redistribute software licenses.
 
-Scope note: admin screens describe the collection manager workflow. In a public deployment, equipment write routes must be protected by staff authentication/authorization before enabling edits. Email/password authentication with bcrypt, JWT login, a protected personal dashboard, paginated lists, and user-owned request CRUD are required MVP features. Advanced checkout tracking remains future scope.
+2. Main Goal
 
-2. Wireframes
-See Technology_Lending_Library_Planning.pdf for box-based illustrations of Home, Catalog, Equipment Details, Lending Request, Lesson Details, and Equipment Management. These are planning illustrations, not completed application screens.
+My goal is to build a working MERN application where users can:
 
-Frontend pages: /register, /login, /dashboard, /dashboard/requests/new, /dashboard/requests/:id/edit, /, /equipment, /equipment/:id, /equipment/:id/request, /lessons/:id, /manage/equipment, /manage/equipment/new, /manage/equipment/:id/edit.
+- Create an account
+- Log in securely
+- Browse technology equipment
+- Search and filter items
+- View equipment details
+- View lesson plans connected to equipment
+- Submit a lending request
+- View, edit, and delete their own pending requests
+- Use the app on desktop and mobile devices
 
-3. Planning board and milestone schedule
-Open Technology_Lending_Library_Board.html in a browser. It contains To Do, Done, and Icebox sections, editable task status, and a daily schedule. Changes save in that browser only; export JSON to preserve or share updates. This is a local planning tool, not a hosted Trello board. For the required shared Trello link, create a board with these same three lists and paste the cards below.
+Staff users can also manage equipment records.
 
-The schedule assumes one five-day project week beginning Monday, October 5, 2026. Adjust dates if the class deadline differs. Core functionality comes first; Friday includes deployment buffer and final review.
+3. Technology Used
 
-Monday - Day 1
-Implement registration/login, User model, bcrypt hashing, JWT middleware, and role checks. Set up React and Express repositories; connect MongoDB; define Equipment, LessonPlan, and LendingRequest models; implement and test equipment GET/POST routes.
+Frontend:
+React
+Vite
+JavaScript
+HTML
+CSS
+React Router
 
-Tuesday - Day 2
-Finish equipment CRUD and lending request POST; seed sample equipment and lessons; test validation and error responses in Postman.
+Backend:
+Node.js
+Express
+MongoDB Atlas
+Mongoose
 
-Wednesday - Day 3
-Build register/login screens and protected dashboard with paginated personal requests. Build home, catalog, details, and admin forms; connect React to API; complete search and category filters.
+Authentication:
+bcrypt
+JSON Web Tokens
 
-Thursday - Day 4
-Finish deployment and end-to-end verification before the Friday morning deadline. Complete lending form and confirmation; link lessons to equipment; meet MVP; apply responsive colors and accessibility; begin deployment.
+Other Tools:
+Git
+GitHub
+VS Code
+Postman
+dotenv
+fetch
 
-Friday - Day 5
-Submit MERN project by Friday, October 9, 2026 at 9:00 a.m. Eastern, per the supplied class announcement. Complete deployment, verification, README, reflection, and presentation preparation by Thursday evening.
+The design will use hot pink, teal, soft purple, mint, black, and white.
 
-To Do
-Create frontend and backend repositories
-Set up React/Vite and Express
-Connect MongoDB Atlas using .env
-Create four Mongoose models, including User
-Seed sample equipment and linked lessons
-Build and test equipment CRUD API
-Build lending request API with date validation
-Build home and catalog pages
-Build equipment details and lesson list
-Build lending request form and confirmation
-Build add/edit/delete equipment interface
-Add search and category/availability filters
-Add responsive hot pink, teal, purple, mint styling
-Verify end-to-end database persistence and errors
-Deploy frontend and backend; configure CORS
-Write README/reflection and prepare presentation
+4. Main Pages
 
-Done
-Project idea and proposal drafted
-Wireframes, ERD, user stories, and REST route plan prepared
-Name and app name entered in mastersheet
+The application will include:
 
-Icebox
+Home page
+Register page
+Login page
+User dashboard
+Equipment catalog
+Equipment details page
+Lending request form
+Lesson plan page
+Equipment management pages for staff
+
+5. Database Models
+
+User
+
+Stores:
+name
+email
+password hash
+role
+
+Equipment
+
+Stores:
+name
+category
+description
+image
+quantity available
+skill level
+safety notes
+on-site-only status
+archived status
+
+Lesson Plan
+
+Stores:
+equipment reference
+title
+objectives
+materials
+steps
+skill level
+
+Lending Request
+
+Stores:
+user reference
+equipment reference
+borrower information
+checkout date
+return date
+purpose
+status
+created date
+
+6. How the App Works
+
+React sends requests to the Express backend.
+
+Express checks the information, uses Mongoose to read or save data in MongoDB, and sends a response back to React.
+
+Users must be logged in to manage their lending requests. A user can only view, edit, or delete their own requests.
+
+A lending request starts as pending. It does not automatically mean the equipment is approved or reserved.
+
+7. Main API Routes
+
+Authentication
+
+POST /api/auth/register
+Creates a new user account.
+
+POST /api/auth/login
+Logs in a user and returns a token.
+
+GET /api/auth/me
+Returns the logged-in user's information.
+
+Equipment
+
+GET /api/equipment
+Shows available equipment.
+
+GET /api/equipment/:id
+Shows one equipment item.
+
+POST /api/equipment
+Creates equipment for staff users.
+
+PATCH /api/equipment/:id
+Updates equipment for staff users.
+
+DELETE /api/equipment/:id
+Deletes or archives equipment for staff users.
+
+Lessons
+
+GET /api/lessons
+Shows lesson plans.
+
+GET /api/lessons/:id
+Shows one lesson plan.
+
+Lending Requests
+
+GET /api/requests
+Shows the logged-in user's requests.
+
+POST /api/requests
+Creates a new lending request.
+
+PATCH /api/requests/:id
+Updates the user's own pending request.
+
+DELETE /api/requests/:id
+Deletes the user's own pending request.
+
+8. Validation and Security
+
+The app will:
+
+Require important form fields
+Check email format
+Make sure return dates are after checkout dates
+Prevent negative equipment quantities
+Hash passwords before saving them
+Protect private routes with JWT authentication
+Keep database passwords and secrets in environment variables
+Prevent users from changing another person's requests
+Prevent regular users from using staff equipment routes
+
+9. User Stories
+
+As a visitor, I want to browse equipment so I can see what technology is available.
+
+As a user, I want to search and filter equipment so I can find what I need faster.
+
+As an educator, I want to see lesson plans so I can use the equipment for learning activities.
+
+As a borrower, I want to submit a lending request so staff can review it.
+
+As a logged-in user, I want to view, edit, and delete my own pending requests.
+
+As a staff member, I want to add and update equipment so the catalog stays current.
+
+10. Minimum Working Version
+
+The first working version should include:
+
+Registration and login
+JWT authentication
+Equipment catalog
+Search and filters
+Equipment details
+Lesson plan details
+Lending request form
+Personal request dashboard
+Create, edit, and delete request features
+Staff equipment CRUD
+MongoDB database storage
+Responsive design
+Error and success messages
+Deployment
+
+11. Future Ideas
+
+Features I may add later include:
+
 Checkout and return tracking
-Overdue reminders and emails
-QR codes and favorites
-Reservation calendar and lending analytics
+Overdue reminders
+Email notifications
+QR codes
+Favorites
+Reservation calendars
+Equipment analytics
+Image uploads
 
-4. ERD and data flow
+12. Final Demo
 
-All equipment has many LessonPlans and many LendingRequests. Each lesson and request references one equipment item using a MongoDB ObjectId. Categories are an enum field on Equipment, not a separate collection. User has many LendingRequests. Each request includes an ownerId reference to User; borrower identity is derived from the authenticated account.
+For my final demonstration, I plan to:
 
-erDiagram
-  USER   --o{ LENDING_REQUEST : owns
-  USER {
-    ObjectId _id PK
-    string name
-    string email
-    string passwordHash
-    string role
-  }
-  EQUIPMENT   --o{ LESSON_PLAN : supports
-  EQUIPMENT   --o{ LENDING_REQUEST : receives
-  EQUIPMENT {
-    ObjectId _id PK
-    string name
-    string category
-    string description
-    string imageUrl
-    int quantityAvailable
-    string skillLevel
-    string safetyNotes
-    boolean onSiteOnly
-    boolean archived
-  }
-  LESSON_PLAN {
-    ObjectId _id PK
-    ObjectId equipmentId FK
-    string title
-    string objectives
-    string materials
-    string steps
-    string skillLevel
-  }
-  LENDING_REQUEST {
-    ObjectId _id PK
-    ObjectId equipmentId FK
-    ObjectId ownerId FK
-    string borrowerName
-    string borrowerEmail
-    date checkoutDate
-    date returnDate
-    string purpose
-    string status
-    date createdAt
-  }
+Register a user
+Log in
+Browse the equipment catalog
+Search for an item
+Open equipment details
+View a related lesson
+Submit a lending request
+Show the saved request in the dashboard
+Edit the request
+Delete the request
+Log out
+Show staff equipment management
 
-Data flow: React sends an HTTP request to Express. Express validates the input, uses Mongoose to read/write MongoDB, and returns JSON. React updates the screen. Borrowing requests do not decrement stock automatically. Related lesson records are seeded in the MVP; lesson editing is future scope.
-
-Validation: require equipment name/category/description and nonnegative integer quantity; validate request email and dates (return after checkout, checkout not in the past); require a real active equipment reference. On-site-only items display an on-site-use message rather than a take-home request. Show 400 for invalid input, 404 for missing records, and a safe 500 response for unexpected errors.
-
-5. User stories and acceptance criteria
-
-1. As a visitor, I want to browse technology equipment so I can find resources for my program.
-   Acceptance: Catalog shows names, categories, images, descriptions, and quantities.
-
-2. As a visitor, I want to search and filter equipment so I can find a suitable kit quickly.
-   Acceptance: Search matches name/description; filters apply category and current availability.
-
-3. As an educator, I want to view item details and related lessons so I know how to use the equipment.
-   Acceptance: Details show skill level, safety notes, and linked lesson objectives/materials.
-
-4. As a borrower, I want to submit a lending request so staff can review my proposed borrowing dates.
-   Acceptance: Valid name, email, dates, and purpose save a pending request; success shows a confirmation.
-
-5. As a collection manager, I want to add equipment so new resources appear in the catalog.
-   Acceptance: Valid required fields create a MongoDB record and appear after refresh.
-
-6. As a collection manager, I want to edit equipment so its information stays accurate.
-   Acceptance: Changes persist after refresh; quantity cannot be negative.
-
-7. As a collection manager, I want to remove retired equipment so visitors see the current collection.
-   Acceptance: Delete requires confirmation; records with requests are archived instead.
-
-8. As an educator, I want to browse lesson plans so I can plan hands-on learning activities.
-   Acceptance: Lesson list and detail pages show title, objectives, steps, materials, and skill level.
-
-6. RESTful routes
-
-  Method   Endpoint   Purpose  
-
-  GET   /api/equipment   List active equipment; optional search, category, available filters  
-  GET   /api/equipment/:id   Read one equipment item  
-  POST   /api/equipment   Create equipment  
-  PATCH   /api/equipment/:id   Update equipment fields  
-  DELETE   /api/equipment/:id   Delete unused item; archive if requests reference it  
-  GET   /api/lessons   List lesson plans; optional equipmentId filter  
-  GET   /api/lessons/:id   Read lesson plan details  
-  POST   /api/requests   Save a pending lending request  
-  GET   /api/health   Check server readiness without exposing secrets  
-
-Equipment POST/PATCH/DELETE are staff-only in a public release. Request endpoints require login and return only the authenticated user's records. Users can list, edit, and delete their own pending requests. Approval routes are future scope. Successful create returns 201; reads/updates 200; delete 204.
-
-7. Project mastersheet and repository status
-
-Submission checklist
-Attach the PDF wireframes/ERD and planning document in the joint Slack thread.
-Create and share a Trello board using the included list/card plan; replace the draft placeholder.
-Create two repositories, replace placeholders, and enter their real links in mastersheet column by Monday.
-Send the completed draft in the joint thread with Paul and Bryan.
-
-8. Required MERN additions — October 5, 2026
-
-This section updates the earlier proposal to match the acceptance criteria supplied from class. These are implementation requirements, not claims that application code is complete. Authentication and personal request history move from Icebox into MVP.
-
-Class announcement summary
-
-Dr. Chantell McDowell appears on the supplied approved-project list.
-Backend Development was due October 2 at 11:59 p.m. Eastern.
-MERN Development is due October 9 at 9:00 a.m. Eastern.
-Cloudinary image handling is an optional resource; it is not listed as a required feature.
-Daily standups cover current work, blockers, and needed support.
-
-Required features and acceptance checks
-
-  Feature   Tech It & Go! implementation   Acceptance check  
-
-  Sign up   Name, email, password; Node/Express hashes password with bcrypt before MongoDB save   Invalid email and duplicate email show readable form errors; database contains a hash, never a plaintext password  
-  Log in   bcrypt comparison; backend signs JWT; React stores token in localStorage as required by class   Valid login opens dashboard; invalid login shows a safe error  
-  Protected access   Bearer token middleware and protected React pages   Missing/expired token denies API access; logout removes token  
-  Create a personal item   Authenticated borrower submits a pending lending request with equipment, dates, and purpose   React sends POST; Mongoose validates fields; saved request appears without a full page reload  
-  Paginated personal list   Dashboard displays only the signed-in user's requests   GET uses page/limit with Mongoose skip()/limit(); previous/next buttons work and disable at boundaries  
-  Edit   Edit button pre-fills current request data; allow edits to owned pending requests   PATCH persists changes; React immediately displays saved values  
-  Delete   Confirm before deleting an owned pending request   Cancel leaves data unchanged; confirmed DELETE removes the record and updates React state without reload  
-  Staff equipment CRUD   Staff can create/edit/delete equipment; ordinary borrowers cannot   Backend checks role, not only hidden frontend buttons; archive referenced equipment  
-  Validation and feedback   Required labels, field errors, loading state, success feedback, empty state   Invalid types/dates and unavailable/on-site-only equipment cannot create take-home requests  
-
-API additions
-
-Use domain-specific routes below. The class's /api/items endpoint is an example; here the user's personal items are lending requests.
-
-  Method   Endpoint   Access / purpose  
-
-  POST   /api/auth/register   Public; normalize email, validate fields, bcrypt hash; never accept a client-supplied staff role  
-  POST   /api/auth/login   Public; verify credentials and return JWT with safe user fields  
-  GET   /api/auth/me   Authenticated; return current user without password hash  
-  GET   /api/requests?page=1&limit=10   Authenticated; owner-filtered, paginated personal list  
-  POST   /api/requests   Authenticated; create request with ownerId from verified token  
-  PATCH   /api/requests/:id   Authenticated; edit only owned pending requests  
-  DELETE   /api/requests/:id   Authenticated; delete only owned pending requests  
-
-Return a pagination object with page, limit, total, and totalPages. Validate positive integer query values and cap limit at 50. Use a stable sort before skip/limit. Clamp the dashboard page after deletion when the last record on a page disappears.
-
-Model and authorization details
-User: name, unique normalized email, passwordHash excluded from normal queries, role (borrower/staff), timestamps.
-LendingRequest: ownerId references User; equipmentId references Equipment; checkoutDate, returnDate, purpose, pending status, timestamps.
-
-Preserve equipment and lesson relationships. Equipment quantity is a nonnegative integer; onSiteOnly and archived are booleans.
-Query request mutations by both _id and ownerId. A guessed ID must not expose or modify another user's records.
-Allowlist editable fields; users cannot change ownerId, role, or approval status.
-Handle duplicate-key email errors as form-friendly conflicts. Keep JWT_SECRET and MongoDB credentials in backend environment variables; commit only .env.example.
-
-Reject expired/invalid JWTs; clear client token on authentication failure. React sends Authorization: Bearer TOKEN on protected requests.
-
-localStorage is used to meet the supplied rubric; never render untrusted HTML or place database credentials/secrets in frontend code.
-
-Board cards to add to To Do
-1. User schema, normalized unique email, bcrypt registration.
-2. Login API, JWT verification middleware, staff role authorization.
-3. Register/login forms, localStorage token, logout and protected dashboard.
-4. Link lending requests to authenticated owners.
-5. Personal request GET/POST/PATCH/DELETE routes with ownership checks.
-6. Server pagination and React previous/next controls.
-7. Pre-filled edit form, delete confirmation, immediate state updates.
-8. Verify two-user isolation, validation, database persistence, and deployed workflows.
-
-Final demonstration
-Register an account; show invalid/duplicate email handling; log in; create a lending request; refresh to show persistence; paginate; edit; cancel then confirm deletion; sign out. Verify a second account cannot access the first user's records. Demonstrate staff equipment CRUD separately.
-
-Optional image enhancement
-Equipment image URLs already satisfy the current catalog plan. If uploads are added later, upload image bytes to Cloudinary and save the returned URL/public ID in MongoDB. Keep Cloudinary credentials on the backend. Image uploads remain optional for this deadline.
+This project gives me a chance to practice frontend development, backend development, databases, authentication, CRUD operations, API routes, and full-stack application design in one project.
