@@ -9,11 +9,23 @@ const requestRoutes = require("./routes/requestRoutes");
 
 const app = express();
 
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Origin is not allowed by CORS."));
+    },
   })
 );
+
 app.use(express.json({ limit: "100kb" }));
 
 app.get("/", (req, res) => {
@@ -39,6 +51,12 @@ app.use((req, res) => {
 });
 
 app.use((error, req, res, next) => {
+  if (error.message === "Origin is not allowed by CORS.") {
+    return res.status(403).json({
+      message: "This website is not allowed to connect to the API.",
+    });
+  }
+
   if (error.type === "entity.parse.failed") {
     return res.status(400).json({ message: "Please send valid JSON." });
   }
@@ -55,7 +73,9 @@ app.use((error, req, res, next) => {
   }
 
   if (error.name === "CastError") {
-    return res.status(400).json({ message: "One of the supplied values is not valid." });
+    return res.status(400).json({
+      message: "One of the supplied values is not valid.",
+    });
   }
 
   console.error(error);
