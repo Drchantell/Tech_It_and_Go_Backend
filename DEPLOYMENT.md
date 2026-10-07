@@ -16,6 +16,7 @@ The repository already includes:
 - MongoDB connection code
 - JWT authentication
 - automated CRUD tests
+- a safe staff-account setup command
 
 ## Step 1: Prepare MongoDB Atlas
 
@@ -24,7 +25,7 @@ The repository already includes:
 3. Make sure you have a database user for the application.
 4. Give that database user read and write access to the Tech It & Go database.
 5. Open Network Access.
-6. Add the outbound IP addresses or network range that will be allowed to connect to Atlas.
+6. Add only the IP addresses or network ranges that need to connect to Atlas whenever possible.
 7. In the cluster, choose Connect > Drivers.
 8. Copy the Node.js connection string.
 9. Replace the password placeholder with the database user's password.
@@ -63,11 +64,11 @@ Paste the private MongoDB Atlas connection string.
 
 ### CLIENT_URL
 
-For the first backend deployment, you can use:
+For the first backend deployment, use:
 
 `http://localhost:5173`
 
-After the Vercel frontend is deployed, change this to include both local and production addresses separated by a comma:
+After the Vercel frontend is deployed, change this to include both addresses separated by a comma:
 
 `http://localhost:5173,https://YOUR-FRONTEND.vercel.app`
 
@@ -107,7 +108,11 @@ then:
 
 This adds the starter equipment and lesson plans.
 
-If you want a staff account, also add these private values before running the seed:
+Do not repeatedly run the seed command after you begin saving real borrowing data because the seed resets sample equipment, lessons, and lending requests.
+
+## Step 6: Create the Staff Account Safely
+
+Add these private values to your local `.env`:
 
 `SEED_STAFF_NAME=Dr. Chantell McDowell`
 
@@ -115,9 +120,15 @@ If you want a staff account, also add these private values before running the se
 
 `SEED_STAFF_PASSWORD=YOUR_PRIVATE_PASSWORD`
 
+Then run:
+
+`npm run create-staff`
+
+This creates or updates the staff account without deleting any equipment, lessons, or borrowing requests.
+
 Do not commit the staff password.
 
-## Step 6: Connect the Frontend
+## Step 7: Connect the Frontend
 
 After Vercel gives you the frontend URL:
 
