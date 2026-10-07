@@ -23,7 +23,7 @@ The repository already includes:
 1. Sign in to MongoDB Atlas.
 2. Open the Tech It & Go project and cluster.
 3. Make sure you have a database user for the application.
-4. Give that database user read and write access to the Tech It & Go database.
+4. Give that database user read and write access to the Tech It & Go! database.
 5. Open Network Access.
 6. Add only the IP addresses or network ranges that need to connect to Atlas whenever possible.
 7. In the cluster, choose Connect > Drivers.
@@ -33,7 +33,7 @@ The repository already includes:
 
 Your connection string should look similar to:
 
-`mongodb+srv://USERNAME:PASSWORD@CLUSTER.mongodb.net/tech_it_and_go?retryWrites=true&w=majority`
+`mongodb+srv://USERNAME:PASSWORD@CLUSTER.mongodb.net/TechItAndGo?retryWrites=true&w=majority`
 
 Do not commit this value to GitHub.
 
