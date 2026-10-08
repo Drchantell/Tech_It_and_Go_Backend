@@ -68,9 +68,9 @@ For the first backend deployment, use:
 
 `http://localhost:5173`
 
-After the Vercel frontend is deployed, change this to include both addresses separated by a comma:
+After the Render frontend is deployed, change this to include both addresses separated by a comma:
 
-`http://localhost:5173,https://YOUR-FRONTEND.vercel.app`
+`http://localhost:5173,https://YOUR-FRONTEND.onrender.com`
 
 ### JWT_SECRET
 
@@ -130,7 +130,7 @@ Do not commit the staff password.
 
 ## Step 7: Connect the Frontend
 
-After Vercel gives you the frontend URL:
+After Render gives you the frontend URL:
 
 1. Return to Render.
 2. Open the Tech It & Go API service.
@@ -138,7 +138,7 @@ After Vercel gives you the frontend URL:
 4. Edit `CLIENT_URL`.
 5. Set it to:
 
-`http://localhost:5173,https://YOUR-FRONTEND.vercel.app`
+`http://localhost:5173,https://YOUR-FRONTEND.onrender.com`
 
 6. Save the change.
 7. Allow Render to redeploy.
