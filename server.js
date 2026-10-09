@@ -3,6 +3,20 @@ require("dotenv").config();
 const app = require("./app");
 const connectDB = require("./config/connection");
 
+function safeMongoError(error) {
+  const rawMessage = error?.message || "Unknown MongoDB connection error.";
+  const message = rawMessage.replace(
+    /mongodb(\+srv)?:\/\/[^@\s]+@/gi,
+    "mongodb$1://[credentials-redacted]@"
+  );
+
+  return {
+    name: error?.name || "Error",
+    code: error?.code || "none",
+    message,
+  };
+}
+
 async function startServer() {
   const port = Number(process.env.PORT || 5000);
 
@@ -17,12 +31,16 @@ async function startServer() {
     const server = app.listen(port, () => {
       console.log(`Server is running on port ${port}.`);
     });
-    server.on("error", () => {
-      console.error("The server could not listen. Check whether the port is already in use.");
+
+    server.on("error", (error) => {
+      console.error("The server could not listen:", error.message);
       process.exit(1);
     });
-  } catch {
-    console.error("MongoDB could not connect. Check MONGO_URI, your database password, and Atlas network access. The server has not started.");
+  } catch (error) {
+    console.error("MongoDB connection failed:", safeMongoError(error));
+    console.error(
+      "The server has not started. Check the MongoDB error above for the exact cause."
+    );
     process.exitCode = 1;
   }
 }
