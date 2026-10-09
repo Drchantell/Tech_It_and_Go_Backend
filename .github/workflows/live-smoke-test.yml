@@ -1,0 +1,27 @@
+name: Live Smoke Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/live-smoke-test.yml"
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check backend health
+        run: |
+          curl -fsS https://tech-it-and-go-api.onrender.com/api/health -o health.json
+          node -e "const x=require('./health.json'); if(x.server!=='running'||x.database!=='connected'){console.error(x); process.exit(1)}; console.log(x)"
+
+      - name: Check equipment endpoint
+        run: |
+          curl -fsS https://tech-it-and-go-api.onrender.com/api/equipment -o equipment.json
+          node -e "const x=require('./equipment.json'); if(!Array.isArray(x)){console.error(x); process.exit(1)}; console.log('equipment_count='+x.length)"
+
+      - name: Check frontend
+        run: |
+          curl -fsS https://tech-it-and-go.onrender.com -o frontend.html
+          grep -qi "<html" frontend.html
+          echo "frontend_ok"
