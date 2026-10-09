@@ -5,7 +5,7 @@
   "description": "Tech It & Go technology lending library backend",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node seed.js && node server.js",
     "dev": "node --watch server.js",
     "seed": "node seed.js",
     "test": "node --test tests/*.test.js",
