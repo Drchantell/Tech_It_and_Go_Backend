@@ -18,7 +18,7 @@ jobs:
       - name: Check equipment endpoint
         run: |
           curl -fsS https://tech-it-and-go-api.onrender.com/api/equipment -o equipment.json
-          node -e "const x=require('./equipment.json'); if(!Array.isArray(x)){console.error(x); process.exit(1)}; console.log('equipment_count='+x.length)"
+          node -e "const x=require('./equipment.json'); if(!x || !Array.isArray(x.equipment)){console.error(x); process.exit(1)}; console.log('equipment_count='+x.equipment.length)"
 
       - name: Check frontend
         run: |
